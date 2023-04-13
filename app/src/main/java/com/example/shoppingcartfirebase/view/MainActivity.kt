@@ -2,9 +2,11 @@ package com.example.shoppingcartfirebase.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.recyclerview.widget.GridLayoutManager
 import com.example.shoppingcartfirebase.R
 import com.example.shoppingcartfirebase.databinding.ActivityMainBinding
 import com.example.shoppingcartfirebase.model.MenuModel
+import com.example.shoppingcartfirebase.viewmodel.MenuAdapter
 import com.example.shoppingcartfirebase.viewmodel.MenuLoadListener
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.database.DataSnapshot
@@ -53,10 +55,15 @@ class MainActivity : AppCompatActivity(), MenuLoadListener {
 
     private fun init() {
         menuLoadListener = this
+
+        val gridLayoutManager = GridLayoutManager(this, 2)
+        binding.menuRecycler.layoutManager = gridLayoutManager
+        binding.menuRecycler.addItemDecoration(ItemSpacing())
     }
 
     override fun onMenuLoadSuccess(menuModelList: List<MenuModel>?) {
-
+        val adapter = MenuAdapter(this, menuModelList!!)
+        binding.menuRecycler.adapter = adapter
     }
 
     override fun onMenuLoadFailure(message: String?) {

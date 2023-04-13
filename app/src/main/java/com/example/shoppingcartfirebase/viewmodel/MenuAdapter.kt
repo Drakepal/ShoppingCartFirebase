@@ -1,12 +1,14 @@
 package com.example.shoppingcartfirebase.viewmodel
 
 import android.content.Context
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.Recycler
+import com.bumptech.glide.Glide
+import com.example.shoppingcartfirebase.R
 import com.example.shoppingcartfirebase.model.MenuModel
 
 class MenuAdapter (
@@ -18,18 +20,31 @@ class MenuAdapter (
         var menuName: TextView? = null
         var menuPrice: TextView? = null
 
+        init {
+            menuImage = itemView.findViewById(R.id.imageView) as ImageView
+            menuName = itemView.findViewById(R.id.menuItemText) as TextView
+            menuPrice = itemView.findViewById(R.id.priceText) as TextView
+        }
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MenuViewHolder {
-        TODO("Not yet implemented")
+       return MenuViewHolder(
+           LayoutInflater.from(context)
+               .inflate(R.layout.layout_menu_item, parent, false)
+       )
     }
 
     override fun getItemCount(): Int {
-        TODO("Not yet implemented")
+        return list.size
     }
 
     override fun onBindViewHolder(holder: MenuViewHolder, position: Int) {
-        TODO("Not yet implemented")
+        Glide.with(context)
+            .load(list[position].image)
+            .into(holder.menuImage!!)
+        holder.menuName!!.text = StringBuilder().append(list[position].name)
+        holder.menuPrice!!.text = StringBuilder("$").append(list[position].price)
     }
 
 }
