@@ -1,5 +1,6 @@
 package com.example.shoppingcartfirebase.view
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.GridLayoutManager
@@ -107,6 +108,8 @@ class MainActivity : AppCompatActivity(), MenuLoadListener, CartLoadListener {
         val gridLayoutManager = GridLayoutManager(this, 2)
         binding.menuRecycler.layoutManager = gridLayoutManager
         binding.menuRecycler.addItemDecoration(ItemSpacing())
+
+        binding.cartButton.setOnClickListener { startActivity(Intent(this, CartActivity::class.java)) }
     }
 
     override fun onMenuLoadSuccess(menuModelList: List<MenuModel>?) {
@@ -125,6 +128,6 @@ class MainActivity : AppCompatActivity(), MenuLoadListener, CartLoadListener {
     }
 
     override fun onLoadCartFailed(message: String?) {
-//        Snackbar.make(binding.mainLayout, message!!, Snackbar.LENGTH_LONG).show()
+     Snackbar.make(binding.mainLayout, message!!, Snackbar.LENGTH_LONG).show()
     }
 }
